@@ -53,6 +53,8 @@ Demos for T-spline, etc.
 #else
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <cerrno>
+#include <cstring>
 #endif
 
 #ifdef use_namespace
@@ -82,12 +84,17 @@ int main(void)
 #ifdef _WIN32
 	_mkdir(dirname.c_str());
 #elif __linux__
+	int dir_err=mkdir("./export", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 	dirname = "./export/" + splinename;
-	const int dir_err = mkdir(dirname.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+	dir_err = mkdir(dirname.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+	cout<< dirname<<endl;
+	if  (dir_err==-1){
+		cout << " mkdir: " << strerror(errno) << '\n';
+	}
 #elif defined __APPLE__
 	dirname = "./export/" + splinename;
 	mkdir(dirname.c_str(), 0744);
-#endif 
+#endif
 
 	StlWriter stlwriter(dirname + "/" + splinename, trimesh);
 	stlwriter.writeStlAcii();
