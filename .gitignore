@@ -1,2 +1,5 @@
 build
 doxy/Doxyfile
+doxy/html
+doxy/latex
+*.swp
