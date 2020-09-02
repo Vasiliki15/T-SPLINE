@@ -12,8 +12,9 @@ set(VERSION_PATCH 0)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 if(UNIX)
   add_definitions(-std=c++11)
+  add_definitions(-g3)
   if(NOT APPLE)
-  
+
   endif(NOT APPLE)
 endif(UNIX)
 if(WIN32)
